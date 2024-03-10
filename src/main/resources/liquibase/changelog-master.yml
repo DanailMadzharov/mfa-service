@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/03-10-2024/tables.sql

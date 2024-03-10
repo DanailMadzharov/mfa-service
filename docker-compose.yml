@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mfa-service-db:
+    image: mysql:latest
+    restart: unless-stopped
+    container_name: mfa-service-db
+    environment:
+      MYSQL_DATABASE: 'mfa'
+      MYSQL_USER: ${DB_USERNAME_ROOT}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: localhost
+    ports:
+      - '8090:3306'
+    volumes:
+      - my-db:/var/lib/mysql
+  mfa-service:
+    image: mfa-service-image
+    container_name: mfa-service
+    depends_on:
+      - mfa-service-db
+    build:
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '8069:8080'
+    environment:
+      - DB_USERNAME=${DB_USERNAME_ROOT}
+      - DB_PASSWORD=${DB_ROOT_PASSWORD}
+      - DB_URL=${DB_URL}
+      - GMAIL_USERNAME=${GMAIL_USERNAME}
+      - GMAIL_APP_PASSWORD=${GMAIL_APP_PASSWORD}
+volumes:
+  my-db:

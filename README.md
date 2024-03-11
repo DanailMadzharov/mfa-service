@@ -24,6 +24,29 @@ In order to run this application locally with Docker-Compose we must follow thes
 3. From the root directory of the project run the following command:
    `docker-compose up --build`
 
+NOTE: Due to platform specific needs, additional commands must be executed inside the MySQL container in order for the service to work on Mac/Linux machines (this is only valid for Mac/Linux)!
+
+## FOR MAC AND LINUX MACHINES ADDITIONAL STEPS
+
+4\* Open the Docker Desktop and open the terminal for the mfa-service-db
+
+5\* Login inside the mysql server with the following command:
+
+
+``mysql -u root -p rootusersisnice``
+
+6\* After successfull login execute the following three queries in the given order:
+
+``CREATE USER ‘root’@’%' IDENTIFIED BY ‘rootusersisnice’;``
+
+``GRANT ALL PRIVILEGES ON _._ TO ‘root’@’%';``
+
+``FLUSH PRIVILEGES;``
+
+NOTE: Make sure the commands are correct and with the correct (') symbol everywhere, otherwise it will not work.
+
+7\* After executing the queries successfully restart the mfa-service container
+
 # Example CURL requests
 
 TIP: CURL requests can be pasted into the Postman url input box and they automatically get converted to basic requests
@@ -44,3 +67,4 @@ TIP: CURL requests can be pasted into the Postman url input box and they automat
 "email" : "yourEmailAddress",
 "code" : "yourCode"
 }'`
+ 

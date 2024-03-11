@@ -55,7 +55,7 @@ public class EmailStrategy implements MfaStrategy {
         return EMAIL.equals(type);
     }
 
-    boolean isVerified(String identifier, String code) {
+    private boolean isVerified(String identifier, String code) {
         return oneTimePasswordRepository.deleteOneTimePassword(identifier, code) > 0;
     }
 

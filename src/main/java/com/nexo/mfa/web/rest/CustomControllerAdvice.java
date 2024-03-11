@@ -1,6 +1,7 @@
 package com.nexo.mfa.web.rest;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,6 +76,14 @@ public class CustomControllerAdvice {
     public ErrorResource handleException(HttpMessageNotReadableException ex) {
         ErrorHandlingUtil.logException(ex);
         return new ErrorResource(ErrorCodes.REQUEST_NOT_PARSEABLE);
+    }
+
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    @ExceptionHandler(Exception.class)
+    public ErrorResource handleException(Exception ex) {
+        ErrorHandlingUtil.logException(ex);
+        return new ErrorResource(ErrorCodes.INTERNAL_ERROR);
     }
 
     private ErrorResource processErrors(List<FieldError> fieldErrors) {

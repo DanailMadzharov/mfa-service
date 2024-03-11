@@ -15,11 +15,6 @@ public class MfaException extends RuntimeException {
     private String code;
     private int httpStatus;
 
-    public MfaException(String message, String code) {
-        super(message);
-        this.code = code;
-    }
-
     public MfaException(String message, int httpStatus, String code) {
         super(message);
         this.code = code;

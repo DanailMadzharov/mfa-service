@@ -11,7 +11,8 @@ This is a demonstration project.
 
 In order to run this application locally with Docker-Compose we must follow these steps:
 
-0. Install docker and docker-compose
+0. Install docker and docker-compose, have docker running. I suggest restarting it if it is already running,
+sometimes the build command is not working when fired on an old daemon.
 
 1. Create a Google Account App password in order to be able to send emails from your email address:
 
@@ -26,7 +27,7 @@ In order to run this application locally with Docker-Compose we must follow thes
 that the app password corresponds to. The other properties you can leave as they are.
 
 
-3. From the root of the project run the following command:
+3. From the root directory of the project run the following command:
 `docker-compose up --build`
 
 # Example CURL requests
@@ -36,19 +37,18 @@ TIP: CURL requests can be pasted into the Postman url input box and they automat
 1. Create and send MFA email
 
 
-`curl --location 'http://localhost:8069/v1/otp' \
-   --header 'Content-Type: application/json' \
-   --header 'Cookie: JSESSIONID=EFC72D14B352DBF24C7F28C10AD81C2A; TARATAIKA-REFRESH=eyJhbGciOiJIUzUxMiJ9.eyJyZWZyZXNoVG9rZW5JZCI6IjQxYjA0MTY1LWI5ODYtNGVjYy05ZmEzLWY1Y2JkNjljMjA0YiIsInVzZXJJZCI6MSwiaWF0IjoxNzA5NzUyODUzLCJhdWQiOiJ0YXJhdGFpa2EtYXBwbGljYXRpb24iLCJpc3MiOiJUQVJBVEFJS0EiLCJleHAiOjE3MTI0MzEyNTN9.jooPTLQtwWU0dqxIvczNX4MwCRXTtsLaBzHiNPXTGby4Q9iF7FcFQfV8BS0A9wevgTbTAcweaah9UvGqoklLyA' \
-   --data '{
-   "email" : "yourEmailAddress"
-   }'`
+`curl --location 'http://localhost:8069/v1/otp/verify' \
+--header 'Content-Type: application/json' \
+--data '{
+"email" : "yourEmailAddress",
+"code" : "yourCode"
+}'`
 
 2. Verify MFA code
 
 
 `curl --location 'http://localhost:8069/v1/otp/verify' \
    --header 'Content-Type: application/json' \
-   --header 'Cookie: JSESSIONID=EFC72D14B352DBF24C7F28C10AD81C2A; TARATAIKA-REFRESH=eyJhbGciOiJIUzUxMiJ9.eyJyZWZyZXNoVG9rZW5JZCI6IjQxYjA0MTY1LWI5ODYtNGVjYy05ZmEzLWY1Y2JkNjljMjA0YiIsInVzZXJJZCI6MSwiaWF0IjoxNzA5NzUyODUzLCJhdWQiOiJ0YXJhdGFpa2EtYXBwbGljYXRpb24iLCJpc3MiOiJUQVJBVEFJS0EiLCJleHAiOjE3MTI0MzEyNTN9.jooPTLQtwWU0dqxIvczNX4MwCRXTtsLaBzHiNPXTGby4Q9iF7FcFQfV8BS0A9wevgTbTAcweaah9UvGqoklLyA' \
    --data '{
    "email" : "yourEmailAddress",
    "code" : "yourCode"

@@ -6,8 +6,9 @@ COPY . .
 
 COPY ./*gradle* $APP_DIR/
 COPY gradle $APP_DIR/gradle
-# Build the project and the JAR file
-RUN ./gradlew clean build -x test
+
+RUN chmod +x ./gradlew
+RUN ./gradlew clean build
 
 FROM amazoncorretto:17
 ENV APP_DIR=/app

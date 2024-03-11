@@ -13,7 +13,6 @@ public enum ErrorCodes implements ErrorCode {
     INVALID_REQUEST_BODY("0004", "Request Contains Errors"),
     REQUEST_NOT_PARSEABLE("0005", "Request Not In Correct Format"),
     MISSING_REQUEST_ARGUMENTS("0006", "Required Request Arguments Are Not Present"),
-    API_NOT_FOUND("0007", "The Requested API Is Not Found"),
     MFA_NOT_SUPPORTED("0008", "Mfa is not supported"),
     BAD_REQUEST_VERIFICATION_INVALID("0009", "Verification is invalid");
 

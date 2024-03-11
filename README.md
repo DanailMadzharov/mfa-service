@@ -19,7 +19,7 @@ In order to run this application locally with Docker-Compose we must follow thes
 2. Start docker.
 
    TIP: I suggest restarting it if it is already running,
-    sometimes the build command is not working when fired on top of an old daemon.
+   sometimes the build command is not working when fired on top of an old daemon.
 
 3. From the root directory of the project run the following command:
    `docker-compose up --build`
@@ -30,11 +30,10 @@ TIP: CURL requests can be pasted into the Postman url input box and they automat
 
 1. Create and send MFA email
 
-`curl --location 'http://localhost:8069/v1/otp/verify' \
+`curl --location 'http://localhost:8069/v1/otp' \
 --header 'Content-Type: application/json' \
 --data '{
-"email" : "yourEmailAddress",
-"code" : "yourCode"
+"email" : "yourEmailAddress"
 }'`
 
 2. Verify MFA code

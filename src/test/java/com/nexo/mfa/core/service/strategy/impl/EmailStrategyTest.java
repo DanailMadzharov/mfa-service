@@ -15,6 +15,7 @@ import com.nexo.mfa.core.domain.exception.BadRequestException;
 import com.nexo.mfa.core.repository.OneTimePasswordRepository;
 import com.nexo.mfa.core.service.EmailService;
 import com.nexo.mfa.core.service.generator.SecretCodeGenerator;
+import com.nexo.mfa.core.util.HashUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -52,6 +53,7 @@ public class EmailStrategyTest {
         verify(codeGenerator).generateRandomCode(6);
         verify(oneTimePasswordRepository).save(any());
         verify(emailService).sendEmail(SOME_EMAIL, SOME_CODE);
+        verify(oneTimePasswordRepository).deleteByIdentifier(HashUtil.hash(SOME_EMAIL));
     }
 
     @Test

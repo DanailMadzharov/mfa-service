@@ -24,4 +24,10 @@ public interface OneTimePasswordRepository extends JpaRepository<OneTimePassword
             "WHERE otp.expiryDate <= :now")
     void expireOneTimePasswords(@Param("now") LocalDateTime now);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM OneTimePassword otp " +
+            "WHERE otp.userIdentifier = :hashedIdentifier")
+    void deleteByIdentifier(String hashedIdentifier);
+
 }

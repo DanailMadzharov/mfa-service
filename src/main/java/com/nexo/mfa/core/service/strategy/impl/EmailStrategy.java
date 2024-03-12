@@ -31,10 +31,14 @@ public class EmailStrategy implements MfaStrategy {
 
     @Override
     public void handle(String emailAddress) {
+        String hashedIdentifier = HashUtil.hash(emailAddress);
+
+        deleteExistingCodeForIdentifier(hashedIdentifier);
+
         String code = codeGenerator.generateRandomCode(emailMfaProperties.getLength()).toUpperCase();
 
         oneTimePasswordRepository.save(
-                OneTimePassword.builder().code(HashUtil.hash(code)).userIdentifier(HashUtil.hash(emailAddress))
+                OneTimePassword.builder().code(HashUtil.hash(code)).userIdentifier(hashedIdentifier)
                         .expiryDate(OffsetDateTime.now().plusMinutes(emailMfaProperties.getExpiryMinutes())
                                 .toLocalDateTime()).build());
 
@@ -53,6 +57,9 @@ public class EmailStrategy implements MfaStrategy {
     @Override
     public boolean supports(MfaType type) {
         return EMAIL.equals(type);
+    }
+    private void deleteExistingCodeForIdentifier(String hashedIdentifier) {
+        oneTimePasswordRepository.deleteByIdentifier(hashedIdentifier);
     }
 
     private boolean isVerified(String identifier, String code) {

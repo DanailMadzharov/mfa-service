@@ -39,7 +39,7 @@ NOTE: Due to platform specific needs, additional commands must be executed insid
 
 ``CREATE USER ‘root’@’%' IDENTIFIED BY ‘rootusersisnice’;``
 
-``GRANT ALL PRIVILEGES ON _._ TO ‘root’@’%';``
+``GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';``
 
 ``FLUSH PRIVILEGES;``
 
